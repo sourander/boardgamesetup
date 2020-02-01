@@ -6,6 +6,12 @@ This script was created for Raiders of the North Sea game. The game asks the pla
 
 The code should be fairly easy to modify to suit others games aswell.
 
+## Usage
+The only requirements is that you have numpy installed. After that, using the script is as simple as:
+```
+python raiders.py
+```
+
 An example output is:
 
 ```
