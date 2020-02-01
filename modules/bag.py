@@ -1,4 +1,5 @@
 import numpy as np
+from modules.resourcetoken import ResourceToken
 
 class Bag():
     def __init__(self, pool):
@@ -13,7 +14,7 @@ class Bag():
     def populate(self):
         # Add components to tokens[]
         for component in self.pool:
-            name, count = pool[component]
+            name, count = self.pool[component]
 
             if count == 0:
                 print("[INFO] Skipping ", name)

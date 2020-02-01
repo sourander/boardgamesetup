@@ -1,108 +1,9 @@
-import numpy as np
 
-class Cube():
-    def __init__(self, name):
-        self.name = name
-
-    def __repr__(self):
-        return self.name
+from modules.board import Board
+from modules.bag import Bag
 
 
-class Bag():
-    def __init__(self, pool):
-        # Initialize variables
-        self.cubes =  []
-        self.pool = pool
-
-        # Populate the cubes list and shuffle it
-        self.populate()
-        self.shuffle()
-        
-    def populate(self):
-        # Add components to cubes[]
-        for component in self.pool:
-            name, count = pool[component]
-
-            if count == 0:
-                print("[INFO] Skipping ", name)
-                continue
-
-            for i in range(0, count):
-                self.cubes.append(Cube(name))
-
-        print("[INFO] Total amount of cubes in the bag: ", len(self.cubes))
-
-    def shuffle(self):
-        np.random.shuffle(self.cubes)
-
-    def draw_cube(self):
-        # Return the last item from the list
-        # and remove it
-        return self.cubes.pop()
-
-
-class Location():
-    def __init__(self, name, slots):
-        self.name = name
-        self.slots = slots
-        self.cubes = []
-
-        self.populate()
-
-    def populate(self):
-        # For each slots in the location, 
-        # get a cube from the Bag.
-        for i in range(0, self.slots):
-            cube = bag.draw_cube()
-            self.cubes.append(cube)
-
-    def __repr__(self):
-        return "{} with items {}".format(self.name, self.cubes)
-
-
-
-class Board():
-    def __init__(self, location_pool):
-        self.location_pool = location_pool
-        self.locations = []
-
-        self.populate_locations()
-
-    def populate_locations(self):
-        for loc in self.location_pool:
-            name, slots = self.location_pool[loc]
-
-            # Initialize the location and add it to list
-            this_location = Location(name, slots)
-
-            # Append the location also to the list so that we can access it easier
-            self.locations.append(this_location)
-
-    def report(self):
-        for i, loc in enumerate(self.locations):
-            name = loc.name
-            
-            line_to_print = name + ": \t"
-            
-            if i % 6 == 0:
-                print(" ")
-
-            # Create a list of cube names 
-            # e.g. ['Valkyrie', 'Gold']
-            cubes = []
-            for cube in loc.cubes:
-                cubes.append(cube.name)
-
-            # Find all unique names and count them
-            uniques = set(cubes)
-            for unique in uniques:
-                c = cubes.count(unique)
-                addition = "{}x {}    ".format(c, unique)
-                line_to_print = line_to_print + addition
-
-            print(line_to_print)
-
-def menu():
+def raiders_config_menu():
     # Set default values
     golds = 18
     meads = 0
@@ -154,13 +55,18 @@ def menu():
                      20: ("Harbour", 4),
                      21: ("Harbour", 4),
                      22: ("Harbour", 3),
-                     23: ("Harbour", 4)}
+                     23: ("Harbour", 4) }
+
+    if fieldOfFame:
+        location_pool[24] = ("Township", 4)
+        location_pool[25] = ("Township", 3)
+        location_pool[26] = ("Township", 4)
 
     return pool, location_pool
 
-pool, location_pool = menu()
+pool, location_pool = raiders_config_menu()
 
 bag = Bag(pool)
-board = Board(location_pool)
+board = Board(location_pool, bag)
 
 board.report()

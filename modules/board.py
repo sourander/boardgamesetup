@@ -1,7 +1,10 @@
+from modules.location import Location
+
 class Board():
-    def __init__(self, location_pool):
+    def __init__(self, location_pool, bag):
         self.location_pool = location_pool
         self.locations = []
+        self.bag = bag
 
         self.populate_locations()
 
@@ -10,7 +13,7 @@ class Board():
             name, slots = self.location_pool[loc]
 
             # Initialize the location and add it to list
-            this_location = Location(name, slots)
+            this_location = Location(name, slots, self.bag)
 
             # Append the location also to the list so that we can access it easier
             self.locations.append(this_location)
@@ -21,7 +24,9 @@ class Board():
             
             line_to_print = name + ": \t"
             
-            if i % 6 == 0:
+            gaps_list = [6, 12, 17, 20, 23]
+
+            if i in gaps_list:
                 print(" ")
 
             # Create a list of token names 
